@@ -2,6 +2,7 @@ package com.codewithproject.employee.service;
 
 import com.codewithproject.employee.entity.Employee;
 import com.codewithproject.employee.repository.EmployeeRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,5 +19,12 @@ public class EmployeeService {
 
     public List<Employee> getAllEmployees(){
         return employeeRepository.findAll();
+    }
+
+    public void deleteEmployee (Long id){
+        if(!employeeRepository.existsById(id)){
+            throw new EntityNotFoundException("Employee with ID " + id + " not found");
+        }
+        employeeRepository.deleteById(id);
     }
 }
